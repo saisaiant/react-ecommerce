@@ -10,7 +10,7 @@ const config = {
   storageBucket: "crwn-db-16e3d.appspot.com",
   messagingSenderId: "912224367649",
   appId: "1:912224367649:web:4612e81ccfdde26ddb5f60",
-  measurementId: "G-S9ZNYWJ7LW"
+  measurementId: "G-S9ZNYWJ7LW",
 };
 
 export const createUserProfileDocument = async (userAuth, additionalData) => {
@@ -29,7 +29,7 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
         displayName,
         email,
         createdAt,
-        ...additionalData
+        ...additionalData,
       });
     } catch (error) {
       console.log("error creating user", error.message);
@@ -42,21 +42,21 @@ export const addCollectionAndDocuments = async (collectionKey, objectToAdd) => {
   const collectionRef = firestore.collection(collectionKey);
 
   const batch = firestore.batch();
-  objectToAdd.forEach(obj => {
+  objectToAdd.forEach((obj) => {
     const newDocRef = collectionRef.doc();
     batch.set(newDocRef, obj);
   });
   return await batch.commit();
 };
 
-export const convertCollectionsSnapshotToMap = collections => {
-  const transformedCollection = collections.docs.map(doc => {
+export const convertCollectionsSnapshotToMap = (collections) => {
+  const transformedCollection = collections.docs.map((doc) => {
     const { title, items } = doc.data();
     return {
       routeName: encodeURI(title.toLowerCase()),
       id: doc.id,
       title,
-      items
+      items,
     };
   });
   //console.log(transformedCollection);
